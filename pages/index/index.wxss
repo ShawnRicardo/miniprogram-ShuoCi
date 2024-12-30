@@ -8,3 +8,45 @@ page {
   flex: 1;
   overflow-y: hidden;
 }
+
+.container {
+  padding: 20px;
+}
+
+.input-section {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.text-input {
+  width: 100%;
+  height: 80rpx;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #07c160;
+  color: #fff;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.image-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 30rpx;
+}
+
+.generated-image {
+  width: 100%;
+  border-radius: 8rpx;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
