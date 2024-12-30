@@ -21,6 +21,10 @@ Page({
       return
     }
 
+    // wx.showLoading({
+    //     title:"生成中..."
+    // })
+
     this.setData({ loading: true })
 
     try {
@@ -37,7 +41,9 @@ Page({
           data: {
             workflow_id: '7454178606152663076',
             parameters: {
-              text: this.data.inputText
+                // text: this.data.inputText
+                BOT_USER_INPUT: this.data.inputText  // 就是这里，变量名，一定要和 工作流 中自定义的变量名相同，要不然无法传参
+
             }
           },
           success: (res) => {
