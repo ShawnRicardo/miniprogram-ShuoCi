@@ -24,26 +24,60 @@ Page({
     this.setData({ loading: true })
 
     try {
-      // TODO: 调用 coze API 获取图片 URL
-      // const response = await wx.request({
-      //   url: 'YOUR_COZE_API_URL',
-      //   method: 'POST',
-      //   data: {
-      //     text: this.data.inputText
-      //   }
-      // })
+      console.log('开始请求，参数：', this.data.inputText)
       
-      // 使用示例图片
-      const mockImageUrl = 'https://mmbiz.qpic.cn/mmbiz_jpg/UicQ7HgWiaUb0eXrjsqrPYFicuVhDhkKGJrYPiahqYibLKYBHwIibLWxTIBBwBZyv5LMECYgQpRtrqXbsGM1PiaqPBu0A/0'
-      
-      await new Promise(resolve => setTimeout(resolve, 1000)) // 模拟加载延迟
-      
-      this.setData({
-        imageUrl: mockImageUrl
+      const response = await new Promise((resolve, reject) => {
+        wx.request({
+          url: 'https://api.coze.cn/v1/workflow/run',
+          method: 'POST',
+          header: {
+            'Authorization': 'Bearer pat_RNPfuwpnTLtuaiJYRz7P9Htw7AoYtPXuvNXaGtFZi6B0ic0nufpgxOYB6S5sO77V',
+            'Content-Type': 'application/json'
+          },
+          data: {
+            workflow_id: '7454178606152663076',
+            parameters: {
+              text: this.data.inputText
+            }
+          },
+          success: (res) => {
+            console.log('请求成功，响应数据：', res)
+            resolve(res)
+          },
+          fail: (error) => {
+            console.error('请求失败：', error)
+            reject(error)
+          }
+        })
       })
+
+      console.log('完整响应：', response)
+
+      if (!response || !response.data) {
+        throw new Error('No response data')
+      }
+
+      if (response.data.code === 0) {
+        console.log('响应code为0，解析data：', response.data.data)
+        const result = JSON.parse(response.data.data)
+        
+        if (result.output) {
+          console.log('获取到图片URL：', result.output)
+          this.setData({
+            imageUrl: result.output
+          })
+        } else {
+          console.error('响应中没有output字段：', result)
+          throw new Error('No image URL in response')
+        }
+      } else {
+        console.error('响应code不为0：', response.data)
+        throw new Error(response.data.msg || '请求失败')
+      }
     } catch (error) {
+      console.error('完整错误信息：', error)
       wx.showToast({
-        title: '生成失败，请重试',
+        title: error.message || '生成失败，请重试',
         icon: 'none'
       })
     } finally {
