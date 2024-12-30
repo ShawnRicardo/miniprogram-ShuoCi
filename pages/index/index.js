@@ -33,8 +33,10 @@ Page({
       //   }
       // })
       
-      // 这里暂时使用模拟数据
-      const mockImageUrl = 'https://placeholder.com/300x300'
+      // 使用示例图片
+      const mockImageUrl = 'https://mmbiz.qpic.cn/mmbiz_jpg/UicQ7HgWiaUb0eXrjsqrPYFicuVhDhkKGJrYPiahqYibLKYBHwIibLWxTIBBwBZyv5LMECYgQpRtrqXbsGM1PiaqPBu0A/0'
+      
+      await new Promise(resolve => setTimeout(resolve, 1000)) // 模拟加载延迟
       
       this.setData({
         imageUrl: mockImageUrl
